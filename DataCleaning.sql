@@ -1,9 +1,11 @@
+-- Find Relevant Information
+
 SELECT *
 FROM food_coded;
 
 -- GPA Condensed 
 
-Select SUBSTRING(GPA ,1,3) AS GPA
+Select FORMAT(GPA ,1) AS GPA
 FROM FOOD_CODED;
 
 -- Gender is Male Or Female
@@ -105,7 +107,7 @@ FROM FOOD_CODED;
 
 -- Table of all accumulated Data
 
-Select SUBSTRING(GPA ,1,3) AS GPA, IF(Gender = 1,"F","M") As Gender, IF(vitamins = 1,"Yes","No") As DailyVitamins, IF(sports = 1,"Yes","No") As SportsActivity, TRIM(SUBSTRING(WEIGHT,1,3)) AS Weight,
+Select FORMAT(GPA ,1) AS GPA, IF(Gender = 1,"F","M") As Gender, IF(vitamins = 1,"Yes","No") As DailyVitamins, IF(sports = 1,"Yes","No") As SportsActivity, TRIM(SUBSTRING(WEIGHT,1,3)) AS Weight,
 CASE
 	WHEN on_off_campus = 1 THEN "Very unlikely"
     WHEN on_off_campus = 2 THEN "Unlikely "
@@ -156,10 +158,12 @@ FROM Food_coded
 WHERE Weight >= 1
 ORDER BY YearInCollege;
 
+-- Creating CTE
+
 WITH CollegeFoodHabits (GPA, Gender, DailyVitamins, SportsActivity, Weight, DailyVegetables, HousingSituation, EatingOutPerWeek, ExerciseFreq, CookingFreq, YearInCollege)
 AS
 (
-Select SUBSTRING(GPA ,1,3) AS GPA,
+Select FORMAT(GPA ,1) AS GPA,
 IF(Gender = 1,"F","M") As Gender, 
 IF(vitamins = 1,"Yes","No") As DailyVitamins, 
 IF(sports = 1,"Yes","No") As SportsActivity, 
@@ -212,7 +216,6 @@ CASE
 END AS YearInCollege
 FROM Food_coded
 WHERE Weight >= 1
--- ORDER BY YearinCollege
 )
 
 -- CTE CREATED
@@ -220,12 +223,11 @@ SELECT *
 FROM CollegeFoodHabits
 ORDER BY YearInCollege;
 
--- TEMP TABLE
 
 -- Creating View for Visualzation
 
 CREATE VIEW CollegeStudentFoodHabits as
-Select SUBSTRING(GPA ,1,3) AS GPA,
+Select FORMAT(GPA ,1) AS GPA,
 IF(Gender = 1,"F","M") As Gender, 
 IF(vitamins = 1,"Yes","No") As DailyVitamins, 
 IF(sports = 1,"Yes","No") As SportsActivity, 
@@ -278,6 +280,5 @@ CASE
 END AS YearInCollege
 FROM Food_coded
 WHERE Weight >= 1
--- ORDER BY YearinCollege
 
 
